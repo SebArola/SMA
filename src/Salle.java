@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import fr.irit.smac.amak.Environment;
 import fr.irit.smac.amak.Scheduling;
 
@@ -53,10 +55,19 @@ public class Salle extends Environment {
 			}
 		}
 	}
-
+	
+	public ArrayList<Area> getAreaAround(int x, int y, int radius){
+		ArrayList<Area> area_around = new ArrayList<Area>();
+		for (int i=x-radius; i<x+radius;i++) {
+			for (int j=y-radius; j<y+radius;j++) {
+				area_around.add(this.areas[i][j]);
+			}
+		}
+		return area_around;
+	}
+	
 	/**
 	 * Getter for the areas
-	 * 
 	 * @return the areas array
 	 */
 	public Area[][] getAreas() {
