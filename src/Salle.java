@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
 import fr.irit.smac.amak.Environment;
 import fr.irit.smac.amak.Scheduling;
 
@@ -19,6 +18,9 @@ public class Salle extends Environment {
 	 * Areas in the world
 	 */
 	private Area[][] areas;
+
+	private Area[] windows;
+	private Area[] doors;
 	/**
 	 * Number of areas in width
 	 */
@@ -45,6 +47,9 @@ public class Salle extends Environment {
 				areas[y][x] = new Area(x, y);
 			}
 		}
+		
+		this.windows = new Area[]{areas[0][10], areas[0][20], areas[0][30], areas[0][40], areas[0][50], areas[0][60], areas[0][70], areas[0][80], areas[0][90]};
+		this.doors = new Area[]{areas[0][10], areas[0][90]};
 	}
 
 	private float getAmbiantLuminosity() {
@@ -57,30 +62,25 @@ public class Salle extends Environment {
 		}
 		return l;
 	}
-	
+
 	private float getWindowLuminosity() {
-		float l;
-		Random r = new Random();
-		if(r.nextBoolean()) {
-			l = this.getAmbiantLuminosity()*0.8f+r.nextFloat()/5;
-		}else {
-			l = this.getAmbiantLuminosity()*0.8f-r.nextFloat()/5;
-		}
-		return l;
+		return  this.getAmbiantLuminosity() * 0.8f;
 	}
-	
+
 	private float getDoorLuminosity() {
-		float l;
-		Random r = new Random();
-		if(r.nextBoolean()) {
-			l = this.getAmbiantLuminosity()*0.25f+r.nextFloat()/5;
-		}else {
-			l = this.getAmbiantLuminosity()*0.25f-r.nextFloat()/5;
-		}
-		return l;
+		return this.getAmbiantLuminosity() * 0.25f;
 	}
 	
-	
+	private float getNoise() {
+		Random r = new Random();
+		float noise;
+		if (r.nextBoolean()) {
+			noise = r.nextFloat() / 5;
+		} else {
+			noise = - r.nextFloat() / 5;
+		}
+		return noise;		
+	}
 
 	/**
 	 * Inform each area at each cycle, 1 cycle = 1 minute
@@ -104,20 +104,43 @@ public class Salle extends Environment {
 				areas[y][x].cycle();
 			}
 		}
+		
+		
+		
 	}
 	
-	public ArrayList<Area> getAreaAround(int x, int y, int radius){
+	private void illuminateByCone(Area departure, int maxDistance, float luminosity) {
+		for(Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance)) {
+			
+		}
+	}
+
+	public ArrayList<Area> getAreaAround(int x, int y, int radius) {
 		ArrayList<Area> area_around = new ArrayList<Area>();
-		for (int i=x-radius; i<x+radius;i++) {
-			for (int j=y-radius; j<y+radius;j++) {
+		for (int i = x - radius; i < x + radius; i++) {
+			for (int j = y - radius; j < y + radius; j++) {
 				area_around.add(this.areas[i][j]);
 			}
 		}
 		return area_around;
 	}
-	
+
+	public ArrayList<Area> getAreaByCone(int x, int y, int maxDistance) {
+		ArrayList<Area> areaCone = new ArrayList<Area>();
+		for (int i = 0; i < maxDistance; i += 1) {
+			for (int j = 0; j < i; j += 1) {
+				areaCone.add(this.areas[x + i][y + j]);
+				if(j != 0 && y - j>=0) {
+					areaCone.add(this.areas[x + i][y - j]);
+				}
+			}
+		}
+		return areaCone;
+	}
+
 	/**
 	 * Getter for the areas
+	 * 
 	 * @return the areas array
 	 */
 	public Area[][] getAreas() {
