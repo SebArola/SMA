@@ -59,20 +59,20 @@ public class DrAmas extends Amas<Salle> {
 		VUI.get().setDefaultView(100, -400, -300);
 		DrAmas drAmas = new DrAmas(new Salle());
 
-		// new WorldViewer(drAmas);
-		MainWindow.addMenuItem("Remove 10 drones", l -> {
+		new SalleViewer(drAmas);
+		/*MainWindow.addMenuItem("Remove 10 drones", l -> {
 			for (int i = 0; i < 10; i++) {
 				drAmas.getAgents().get(drAmas.getEnvironment().getRandom().nextInt(drAmas.getAgents().size()))
 						.destroy();
 			}
 		});
-		MainWindow.addMenuItem("Add 10 drones", l -> {
+		/*MainWindow.addMenuItem("Add 10 drones", l -> {
 			for (int i = 0; i < 10; i++) {
 
-				/*new Drone(drAmas, drAmas.getEnvironment().getRandom().nextInt(World.WIDTH),
-						drAmas.getEnvironment().getRandom().nextInt(World.HEIGHT));*/
+				new Drone(drAmas, drAmas.getEnvironment().getRandom().nextInt(World.WIDTH),
+						drAmas.getEnvironment().getRandom().nextInt(World.HEIGHT));
 			}
-		});
+		});*/
 
 	}
 
@@ -86,10 +86,10 @@ public class DrAmas extends Amas<Salle> {
 		double sum = 0;
 		for (int x = 0; x < getEnvironment().getAreas()[0].length; x++) {
 			for (int y = 0; y < getEnvironment().getAreas().length; y++) {
-				double criticality = getEnvironment().getAreaByPosition(x, y).computeCriticality();
+				/*double criticality = getEnvironment().getAreaByPosition(x, y).computeCriticality();
 				sum += criticality;
 				if (criticality > max)
-					max = criticality;
+					max = criticality;*/
 			}
 		}
 

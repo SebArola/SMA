@@ -40,19 +40,22 @@ public class SalleViewer extends DrawableUI<DrAmas>{
 	 */
 	@Override
 	protected void onDraw(Graphics2D arg0) {
+
+		System.out.println("drawing ?");
 		if (getAmas() != null) {
 			// Draw areas
 			arg0.setColor(Color.gray);
 			for (int x = 0; x < getAmas().getEnvironment().getAreas()[0].length; x++) {
 				for (int y = 0; y < getAmas().getEnvironment().getAreas().length; y++) {
 					Area area = getAmas().getEnvironment().getAreas()[y][x];
-					double timeSinceLastSeen = area.getTimeSinceLastSeen();
-					if (timeSinceLastSeen > 1000)
-						timeSinceLastSeen = 1000;
+					double luminosity = area.getLuminosity();
+					
+					
 					arg0.setColor(
-							new Color((float) timeSinceLastSeen / 1000f, 1 - (float) timeSinceLastSeen / 1000f, 0f));
+							new Color((float) luminosity, (float) luminosity, 0f));
 					arg0.fillRect((int) discreteToTopContinuous(x), (int) discreteToTopContinuous(y), AREA_SIZE,
 							AREA_SIZE);
+					System.out.println("drawing");
 				}
 			}
 
@@ -86,8 +89,10 @@ public class SalleViewer extends DrawableUI<DrAmas>{
 	@Override
 	protected void onMouseDragged(int x, int y) {
 		for (int rx = -2; rx <= 2; rx++)
-			for (int ry = -2; ry <= 2; ry++)
-				getAmas().getEnvironment().getAreaByPosition(x / AREA_SIZE + rx, y / AREA_SIZE + ry).setCritical();
+			for (int ry = -2; ry <= 2; ry++) {
+				//getAmas().getEnvironment().getAreaByPosition(x / AREA_SIZE + rx, y / AREA_SIZE + ry).setCritical();
+			}
+				
 	}
 
 }
