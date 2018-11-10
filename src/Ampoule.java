@@ -95,7 +95,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	protected void onAct() {
 		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx, this.dy, this.rayonDeclairage));
 		for (Area area : this.zoneEclaire) {
-			area.setLuminosity(this.luminosite);
+			area.addLuminosity(this.luminosite);
 		}
 	}
 

@@ -47,9 +47,13 @@ public class Salle extends Environment {
 				areas[y][x] = new Area(x, y);
 			}
 		}
-		
-		this.windows = new Area[]{areas[0][10], areas[0][20], areas[0][30], areas[0][40], areas[0][50], areas[0][60], areas[0][70], areas[0][80], areas[0][90]};
-		this.doors = new Area[]{areas[0][10], areas[0][90]};
+
+		this.windows = new Area[9];
+		for (int i = 1; i < 10; i += 1) {
+			// this.windows[i - 1] = areas[50][0];
+			this.windows[i - 1] = areas[i * 10][0];
+		}
+		this.doors = new Area[] { areas[10][99], areas[90][99] };
 	}
 
 	private float getAmbiantLuminosity() {
@@ -64,22 +68,26 @@ public class Salle extends Environment {
 	}
 
 	private float getWindowLuminosity() {
-		return  this.getAmbiantLuminosity() * 0.8f;
+		return this.getAmbiantLuminosity() * 0.8f;
 	}
 
 	private float getDoorLuminosity() {
 		return this.getAmbiantLuminosity() * 0.25f;
 	}
-	
+
 	private float getNoise() {
 		Random r = new Random();
 		float noise;
 		if (r.nextBoolean()) {
-			noise = r.nextFloat() / 5;
+			noise = r.nextFloat() / 10;
 		} else {
-			noise = - r.nextFloat() / 5;
+			noise = -r.nextFloat() / 10;
 		}
-		return noise;		
+		return noise;
+	}
+
+	private float applyNoise(float value) {
+		return Math.max(0, Math.min(value + getNoise(), 1));
 	}
 
 	/**
@@ -87,6 +95,8 @@ public class Salle extends Environment {
 	 */
 	@Override
 	public void onCycle() {
+
+		this.resetLuminosity();
 
 		this.minutes += 1;
 		if (this.minutes == 60) {
@@ -99,19 +109,56 @@ public class Salle extends Environment {
 
 		System.out.println(this.hour + " heures et " + this.minutes + " minutes");
 
+		/*
+		 * for (Area area : this.windows) { System.out.println("new window at " + area);
+		 * this.illuminateByCone(area, 55, this.getWindowLuminosity(),false); //return;
+		 * }
+		 */
+
+		for (Area area : this.doors) {
+			System.out.println("new door at " + area);
+			this.illuminateByCone(area, 55, this.getDoorLuminosity(), true);
+		}
+
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				areas[y][x].cycle();
 			}
 		}
-		
-		
-		
+
 	}
-	
-	private void illuminateByCone(Area departure, int maxDistance, float luminosity) {
-		for(Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance)) {
-			
+
+	private void resetLuminosity() {
+		for (int x = 0; x < WIDTH; x++) {
+			for (int y = 0; y < HEIGHT; y++) {
+				areas[y][x].resetLuminosity();
+			}
+		}
+
+	}
+
+	private void illuminateByCone(Area departure, int maxDistance, float luminosity, boolean inverse) {
+		for (Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance, inverse)) {
+
+			double distance = Math.hypot(departure.getX() - area.getX(), departure.getY() - area.getY());
+			double ratioDistance = 1 - (distance / maxDistance);
+			if (distance > maxDistance) {
+				ratioDistance = 0;
+			}
+			float noisedL = applyNoise(luminosity);
+
+			/*
+			 * assert (ratioDistance >= 0); assert (ratioDistance <= 1); assert (noisedL >=
+			 * 0); assert (noisedL <= 1);
+			 */
+
+			// System.out.println("lum : " + luminosity + " ratioDistance " + ratioDistance
+			// + " noised " + noisedL
+			// + " distance " + distance);
+
+			// System.out.println(ratioDistance * noisedL);
+
+			area.addLuminosity(ratioDistance * noisedL);
 		}
 	}
 
@@ -125,13 +172,34 @@ public class Salle extends Environment {
 		return area_around;
 	}
 
-	public ArrayList<Area> getAreaByCone(int x, int y, int maxDistance) {
+	public ArrayList<Area> getAreaByCone(int x, int y, int maxDistance, boolean inverse) {
 		ArrayList<Area> areaCone = new ArrayList<Area>();
+
+		// areaCone.add(this.areas[x][y]);
+
 		for (int i = 0; i < maxDistance; i += 1) {
-			for (int j = 0; j < i; j += 1) {
-				areaCone.add(this.areas[x + i][y + j]);
-				if(j != 0 && y - j>=0) {
-					areaCone.add(this.areas[x + i][y - j]);
+			for (int j = 0; j <= i; j += 1) {
+				int newX = y + j;
+
+				int newY = x + i;
+				if (inverse) {
+					newY = x - i;
+				}
+				// System.out.println(newX + "," + newY);
+				// System.out.println(this.areas.length);
+				if (newX < HEIGHT && newY < WIDTH) {
+					System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					areaCone.add(this.areas[newX][newY]);
+				}
+
+				newX = y - j;
+				// System.out.println(j + " vs " + (newX));
+				if (j != 0 && newX >= 0 && newY < WIDTH) {
+
+					// System.out.println(newX + "," + (x - j));
+
+					System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					areaCone.add(this.areas[newX][newY]);
 				}
 			}
 		}
