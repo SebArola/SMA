@@ -79,6 +79,8 @@ public class Salle extends Environment {
 		}
 		return l;
 	}
+	
+	
 
 	/**
 	 * Inform each area at each cycle, 1 cycle = 1 minute
