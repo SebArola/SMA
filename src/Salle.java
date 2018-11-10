@@ -23,12 +23,17 @@ public class Salle extends Environment {
 	 * Number of areas in height
 	 */
 	public final static int HEIGHT = 100;
+	
+	private int hour;
 
 	/**
 	 * Create the various areas
 	 */
 	@Override
 	public void onInitialization() {
+		
+		this.hour = 0;
+		
 		areas = new Area[HEIGHT][WIDTH];
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
@@ -44,7 +49,7 @@ public class Salle extends Environment {
 	public void onCycle() {
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
-				//areas[y][x].cycle();
+				areas[y][x].cycle();
 			}
 		}
 	}

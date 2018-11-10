@@ -46,7 +46,6 @@ public class Area {
 
 		drawable = VUI.get().createRectangle(x*10, y*10, 10,10);
 		drawable.setLayer(0);
-		System.out.println(luminosity);
 	}
 
 	/**
@@ -89,14 +88,10 @@ public class Area {
 	/**
 	 * Update the time since last scan at each cycle
 	 */
-	/*public void cycle() {
-		nextTimeSinceLastSeen++;
-		timeSinceLastSeen = nextTimeSinceLastSeen;
+	public void cycle() {
 
-		if (timeSinceLastSeen > 1000)
-			timeSinceLastSeen = 1000;
-		drawable.setColor(new Color((float) timeSinceLastSeen / 1000f, 1 - (float) timeSinceLastSeen / 1000f, 0f));
-	}*/
+		drawable.setColor(new Color((float) luminosity, (float) luminosity, 0f));
+	}
 
 	/**
 	 * Manually set a hgh criticality to request a scan on a specific area

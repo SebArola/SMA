@@ -41,7 +41,6 @@ public class SalleViewer extends DrawableUI<DrAmas>{
 	@Override
 	protected void onDraw(Graphics2D arg0) {
 
-		System.out.println("drawing ?");
 		if (getAmas() != null) {
 			// Draw areas
 			arg0.setColor(Color.gray);
@@ -55,7 +54,6 @@ public class SalleViewer extends DrawableUI<DrAmas>{
 							new Color((float) luminosity, (float) luminosity, 0f));
 					arg0.fillRect((int) discreteToTopContinuous(x), (int) discreteToTopContinuous(y), AREA_SIZE,
 							AREA_SIZE);
-					System.out.println("drawing");
 				}
 			}
 
