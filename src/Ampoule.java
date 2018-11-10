@@ -32,7 +32,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	/**
 	 * Intensite lumineuse de l'ampoule
 	 */
-	private float luminosite ;
+	private double luminosite ;
 	
 	private DrawableRectangle drawable;
 
@@ -48,6 +48,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	 */
 	public Ampoule(DrAmas amas, int x, int y) {
 		super(amas, x, y);
+		this.zoneEclaire = new ArrayList<Area>();
+		this.luminosite = 0.5;
 	}
 
 	@Override
@@ -82,8 +84,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		return dy;
 	}
 	
-	public void getZoneAround() {
-		
+	public void setLuminosite(double luminosite) {
+		this.luminosite = luminosite;
 	}
 	
 	/**
@@ -91,7 +93,10 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	 */
 	@Override
 	protected void onAct() {
-		
+		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx, this.dy, this.rayonDeclairage));
+		for (Area area : this.zoneEclaire) {
+			area.setLuminosity(this.luminosite);
+		}
 	}
 
 	@Override

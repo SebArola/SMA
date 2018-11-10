@@ -47,6 +47,10 @@ public class Area {
 		drawable = VUI.get().createRectangle(x*10, y*10, 10,10);
 		drawable.setLayer(0);
 	}
+	
+	public void setLuminosity(double lum) {
+		this.luminosity = lum;
+	}
 
 	/**
 	 * Getter for the X coordinate
