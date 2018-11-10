@@ -58,7 +58,7 @@ public class Area {
 	}*/
 	
 	public void addLuminosity(double lum) {
-		this.luminosity = Math.min(lum+luminosity+1, 1f);
+		this.luminosity = Math.min(lum+luminosity, 1f);
 		
 	}
 	

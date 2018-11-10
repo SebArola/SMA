@@ -109,11 +109,10 @@ public class Salle extends Environment {
 
 		System.out.println(this.hour + " heures et " + this.minutes + " minutes");
 
-		/*
-		 * for (Area area : this.windows) { System.out.println("new window at " + area);
-		 * this.illuminateByCone(area, 55, this.getWindowLuminosity(),false); //return;
-		 * }
-		 */
+		for (Area area : this.windows) {
+			System.out.println("new window at " + area);
+			this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); // return;
+		}
 
 		for (Area area : this.doors) {
 			System.out.println("new door at " + area);
@@ -187,14 +186,14 @@ public class Salle extends Environment {
 				}
 				// System.out.println(newX + "," + newY);
 				// System.out.println(this.areas.length);
-				if (newX < HEIGHT && newY < WIDTH) {
+				if (newX < HEIGHT && newY < WIDTH && newX >= 0 && newY >= 0) {
 					System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
 					areaCone.add(this.areas[newX][newY]);
 				}
 
 				newX = y - j;
 				// System.out.println(j + " vs " + (newX));
-				if (j != 0 && newX >= 0 && newY < WIDTH) {
+				if (j != 0 && newX >= 0 && newY < WIDTH && newY >= 0) {
 
 					// System.out.println(newX + "," + (x - j));
 
