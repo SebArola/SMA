@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
 import java.util.Random;
->>>>>>> 1ce76437a7334b3941dd4dade0c56d0067cdc486
+
 
 import fr.irit.smac.amak.Environment;
 import fr.irit.smac.amak.Scheduling;
