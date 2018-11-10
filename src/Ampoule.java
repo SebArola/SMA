@@ -81,7 +81,10 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	public int getY() {
 		return dy;
 	}
-
+	
+	public void getZoneAround() {
+		
+	}
 	
 	/**
 	 * Agent action phase. Eclaire les zones
