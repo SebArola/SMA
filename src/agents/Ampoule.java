@@ -36,6 +36,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 
 	private DrawableRectangle drawable;
 	private ControllableRoundSource source;
+	private double augmentationLum;
+	private double lumMoy;
 
 	/**
 	 * Constructor of the light bulb
@@ -53,6 +55,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		this.source = new ControllableRoundSource(getAmas().getEnvironment().getAreaByPosition(x, y), rayonDeclairage,
 				getAmas().getEnvironment());
 		this.zoneEclaire = new ArrayList<Area>();
+		this.augmentationLum = 0.1f;
+		this.lumMoy = 0.7f;
 	}
 
 	@Override
@@ -123,10 +127,10 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 			nbZone++;
 		}
 		sum /= nbZone;
-		if (sum < 0.5) {
-			this.source.setLuminosity(this.source.);
+		if (sum < this.lumMoy) {
+			this.source.setLuminosity(this.source.getLuminosity()+this.augmentationLum);
 		}else {
-			this.source.setLuminosity;
+			this.source.setLuminosity(this.source.getLuminosity()+this.augmentationLum);
 		}
 	}
 }
