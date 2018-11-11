@@ -115,19 +115,18 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	@Override
 	protected void onDecide() {
 		this.setLuminosity(0.2);
-		// this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx,
-		// this.dy, this.rayonDeclairage));
+		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx,this.dy, this.rayonDeclairage));
 		int sum = 0;
 		int nbZone = 0;
-//		for (Area area : this.zoneEclaire) {
-//			sum += area.getLuminosity();
-//			nbZone++;
-//		}
-//		sum /= nbZone;
-//		if (sum < 0.5) {
-//			this.luminosite+=0.1f;
-//		}else {
-//			this.luminosite-=0.1f;
-//		}
+		for (Area area : this.zoneEclaire) {
+			sum += area.getLuminosity();
+			nbZone++;
+		}
+		sum /= nbZone;
+		if (sum < 0.5) {
+			this.source.setLuminosity(this.source.);
+		}else {
+			this.source.setLuminosity;
+		}
 	}
 }
