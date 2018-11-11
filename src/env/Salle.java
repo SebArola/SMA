@@ -38,6 +38,8 @@ public class Salle extends Environment {
 	private int minutes;
 	private int hour;
 
+	private float ambiantLuminosity;
+
 	/**
 	 * Create the various areas
 	 */
@@ -74,14 +76,12 @@ public class Salle extends Environment {
 	}
 	
 	public void computeAmbiantLuminosity() {
-		float l;
 		float delta = Math.abs(14 - (this.hour+this.minutes/60));
 		if (delta >= 7) {
-			l = 0.2f;
+			this.ambiantLuminosity = 0.2f;
 		} else {
-			l = (7 - delta) / 7;
+			this.ambiantLuminosity = (7 - delta) / 7;
 		}
-		this.getAmbiantLuminosity();
 	}
 
 	/*public float getWindowLuminosity() {

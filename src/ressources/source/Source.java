@@ -23,6 +23,9 @@ public abstract class Source {
 	public abstract double getLuminosity();
 
 	public void cycle() {
+		
+		double l = this.getLuminosity();
+		
 		for (Area area : this.area) {
 
 			double distance = Math.hypot(position.getX() - area.getX(), position.getY() - area.getY());
@@ -43,7 +46,7 @@ public abstract class Source {
 
 			// System.out.println(ratioDistance * noisedL);
 
-			area.addLuminosity(this, ratioDistance * this.getLuminosity());
+			area.addLuminosity(this, ratioDistance * l);
 		}
 	}
 }
