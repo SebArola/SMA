@@ -36,7 +36,7 @@ public class Salle extends Environment {
 	public final static int HEIGHT = 100;
 
 	private int minutes = 30;
-	private int hour = 7;
+	private int hour = 6;
 
 	private float ambiantLuminosity;
 
@@ -71,7 +71,7 @@ public class Salle extends Environment {
 	public void computeAmbiantLuminosity() {
 		float delta = Math.abs(14 - (this.hour+this.minutes/60f));
 		if (delta >= 7) {
-			this.ambiantLuminosity = 0.1f;
+			this.ambiantLuminosity = 0.07f;
 			System.out.println("nuit");
 		} else {
 			System.out.println("jour with "+delta);
