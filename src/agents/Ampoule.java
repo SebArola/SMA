@@ -49,7 +49,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	public Ampoule(DrAmas amas, int x, int y) {
 		super(amas, x, y);
 
-		this.rayonDeclairage = 30;
+		this.rayonDeclairage = 15;
 		//System.out.println(x + "," + y);
 		//System.out.println(getAmas().getEnvironment().getAreaByPosition(x, y));
 		this.source = new ControllableRoundSource(getAmas().getEnvironment().getAreaByPosition(x, y), rayonDeclairage,
@@ -118,9 +118,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onDecide() {
-		this.setLuminosity(0.2);
 		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx,this.dy, this.rayonDeclairage));
-		int sum = 0;
+		double sum = 0;
 		int nbZone = 0;
 		for (Area area : this.zoneEclaire) {
 			sum += area.getLuminosity();
@@ -130,7 +129,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		if (sum < this.lumMoy) {
 			this.source.setLuminosity(this.source.getLuminosity()+this.augmentationLum);
 		}else {
-			this.source.setLuminosity(this.source.getLuminosity()+this.augmentationLum);
+			this.source.setLuminosity(this.source.getLuminosity()-this.augmentationLum);
 		}
 	}
 }
