@@ -126,10 +126,10 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 			nbZone++;
 		}
 		sum /= nbZone;
-		if (sum < this.lumMoy) {
+		if (sum < this.lumMoy-0.05f ) {
 			
 			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
-		}else {
+		}else if(sum > this.lumMoy+0.05f ) {
 			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
 		}
 	}
