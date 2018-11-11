@@ -78,8 +78,10 @@ public class Salle extends Environment {
 	public void computeAmbiantLuminosity() {
 		float delta = Math.abs(14 - (this.hour+this.minutes/60));
 		if (delta >= 7) {
-			this.ambiantLuminosity = 0.2f;
+			this.ambiantLuminosity = 0.01f;
+			System.out.println("nuit");
 		} else {
+			System.out.println("jour");
 			this.ambiantLuminosity = (7 - delta) / 7;
 		}
 	}
@@ -101,6 +103,7 @@ public class Salle extends Environment {
 	public void onCycle() {
 
 		// this.resetLuminosity();
+		this.computeAmbiantLuminosity();
 
 		this.minutes += 1;
 		if (this.minutes == 60) {
