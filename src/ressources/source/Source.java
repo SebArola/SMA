@@ -20,7 +20,7 @@ public abstract class Source {
 	
 	
 	protected abstract List<Area> getAffectedArea();
-	protected abstract double getLuminosity();
+	public abstract double getLuminosity();
 
 	public void cycle() {
 		for (Area area : this.area) {
