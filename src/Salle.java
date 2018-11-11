@@ -21,6 +21,8 @@ public class Salle extends Environment {
 
 	private Area[] windows;
 	private Area[] doors;
+	
+	
 	/**
 	 * Number of areas in width
 	 */
@@ -54,6 +56,9 @@ public class Salle extends Environment {
 			this.windows[i - 1] = areas[i * 10][0];
 		}
 		this.doors = new Area[] { areas[10][99], areas[90][99] };
+		
+		
+		
 	}
 
 	private float getAmbiantLuminosity() {
@@ -165,7 +170,8 @@ public class Salle extends Environment {
 		ArrayList<Area> area_around = new ArrayList<Area>();
 		for (int i = x - radius; i < x + radius; i++) {
 			for (int j = y - radius; j < y + radius; j++) {
-				area_around.add(this.areas[i][j]);
+				if(j>=0 && j<= 100 && i>=0 && i<= 100)
+					area_around.add(this.areas[i][j]);
 			}
 		}
 		return area_around;
@@ -187,7 +193,7 @@ public class Salle extends Environment {
 				// System.out.println(newX + "," + newY);
 				// System.out.println(this.areas.length);
 				if (newX < HEIGHT && newY < WIDTH && newX >= 0 && newY >= 0) {
-					System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					//System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
 					areaCone.add(this.areas[newX][newY]);
 				}
 
@@ -197,7 +203,7 @@ public class Salle extends Environment {
 
 					// System.out.println(newX + "," + (x - j));
 
-					System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					//System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
 					areaCone.add(this.areas[newX][newY]);
 				}
 			}

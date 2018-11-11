@@ -17,10 +17,9 @@ import fr.irit.smac.lxplot.LxPlot;
  */
 public class DrAmas extends Amas<Salle> {
 
-	/**
-	 * Initial drones count on the AMAS creation
-	 */
-	private static final int INITIAL_DRONE_COUNT = 20;
+	private ArrayList<Ampoule> ampoules;
+	
+	public final static int NBAMPOULE = 1;
 	/**
 	 * Queue used to compute the sliding window
 	 */
@@ -42,9 +41,17 @@ public class DrAmas extends Amas<Salle> {
 	 */
 	@Override
 	protected void onInitialAgentsCreation() {
-		/*for (int i = 0; i < INITIAL_DRONE_COUNT; i++)
-			new Drone(this, getEnvironment().getRandom().nextInt(World.WIDTH),
-					getEnvironment().getRandom().nextInt(World.HEIGHT));*/
+		this.ampoules = new ArrayList<Ampoule>();
+		int x =1;
+		int y =1;
+		for(int i = 0 ; i < NBAMPOULE;i++) {
+			if (x>(100/NBAMPOULE)*NBAMPOULE) {
+				x=1;
+				y+=14;
+			}
+			this.ampoules.add(new Ampoule(this, x, y));
+			x+=14;
+		}
 
 	}
 
@@ -82,14 +89,14 @@ public class DrAmas extends Amas<Salle> {
 	 */
 	@Override
 	protected void onSystemCycleEnd() {
-		double max = 0;
+		double min = 1;
 		double sum = 0;
 		for (int x = 0; x < getEnvironment().getAreas()[0].length; x++) {
 			for (int y = 0; y < getEnvironment().getAreas().length; y++) {
-				/*double criticality = getEnvironment().getAreaByPosition(x, y).computeCriticality();
-				sum += criticality;
-				if (criticality > max)
-					max = criticality;*/
+				double lum = getEnvironment().getAreaByPosition(x, y).getLuminosity();
+				sum += lum;
+				if (lum < min)
+					min = lum;
 			}
 		}
 

@@ -49,7 +49,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	public Ampoule(DrAmas amas, int x, int y) {
 		super(amas, x, y);
 		this.zoneEclaire = new ArrayList<Area>();
-		this.luminosite = 0.5;
+		this.luminosite = 0.5f;
+		this.rayonDeclairage = 15;
 	}
 
 	@Override
@@ -96,11 +97,30 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx, this.dy, this.rayonDeclairage));
 		for (Area area : this.zoneEclaire) {
 			area.addLuminosity(this.luminosite);
+			System.out.println(area.getLuminosity());
 		}
+		
 	}
 
 	@Override
 	protected void onUpdateRender() {
 		
+	}
+	
+	@Override
+	protected void onDecide() {
+		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx, this.dy, this.rayonDeclairage));
+		int sum = 0;
+		int nbZone = 0;
+//		for (Area area : this.zoneEclaire) {
+//			sum += area.getLuminosity();
+//			nbZone++;
+//		}
+//		sum /= nbZone;
+//		if (sum < 0.5) {
+//			this.luminosite+=0.1f;
+//		}else {
+//			this.luminosite-=0.1f;
+//		}
 	}
 }
