@@ -23,7 +23,7 @@ public class ControllableRoundSource extends Source {
 	}
 
 	@Override
-	protected double getLuminosity() {
+	public double getLuminosity() {
 		return luminosity;
 	}
 

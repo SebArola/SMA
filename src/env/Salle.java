@@ -72,6 +72,17 @@ public class Salle extends Environment {
 		}
 		return l;
 	}
+	
+	public void computeAmbiantLuminosity() {
+		float l;
+		float delta = Math.abs(14 - (this.hour+this.minutes/60));
+		if (delta >= 7) {
+			l = 0.2f;
+		} else {
+			l = (7 - delta) / 7;
+		}
+		this.getAmbiantLuminosity();
+	}
 
 	/*public float getWindowLuminosity() {
 		return this.getAmbiantLuminosity() * 0.8f;

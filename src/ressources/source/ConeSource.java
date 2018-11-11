@@ -30,7 +30,7 @@ public abstract class ConeSource extends Source {
 	}
 
 	@Override
-	protected double getLuminosity() {
+	public double getLuminosity() {
 		return this.applyNoise(env.getAmbiantLuminosity() * this.ratio);
 	}
 
