@@ -18,9 +18,9 @@ public abstract class ConeSource extends Source {
 		Random r = new Random();
 		double noise;
 		if (r.nextBoolean()) {
-			noise = r.nextDouble() / 10;
+			noise = r.nextDouble() / 20;
 		} else {
-			noise = -r.nextDouble() / 10;
+			noise = -r.nextDouble() / 20;
 		}
 		return noise;
 	}
