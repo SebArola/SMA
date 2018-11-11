@@ -1,3 +1,4 @@
+package ressources;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +7,7 @@ import java.util.Random;
 import fr.irit.smac.amak.Agent;
 import fr.irit.smac.amak.ui.VUI;
 import fr.irit.smac.amak.ui.drawables.DrawableRectangle;
+import ressources.source.Source;
 
 /**
  * An area represents a small part of the world that can be scanned by a drone
@@ -31,7 +33,7 @@ public class Area {
 	 */
 	private DrawableRectangle drawable;
 	private double luminosity = 0;
-	private Map<Object, Double> sources;
+	private Map<Source, Double> sources;
 	// private double luminosity = new Random().nextDouble();
 
 	/**
@@ -45,7 +47,7 @@ public class Area {
 		this.x = x;
 		this.y = y;
 		
-		this.sources = new HashMap<Object, Double>();
+		this.sources = new HashMap<Source, Double>();
 
 		drawable = VUI.get().createRectangle(x * 10, y * 10, 10, 10);
 		drawable.setLayer(0);
@@ -59,7 +61,7 @@ public class Area {
 	 * this.luminosity = 0f; } this.luminosity = lum; }
 	 */
 
-	public void addLuminosity(Object source, double lum) {
+	public void addLuminosity(Source source, double lum) {
 		
 		this.sources.put(source, lum);
 		
@@ -114,7 +116,7 @@ public class Area {
 		
 		this.resetLuminosity();
 		
-		for(Map.Entry<Object, Double> entry : this.sources.entrySet()) {
+		for(Map.Entry<Source, Double> entry : this.sources.entrySet()) {
 			this.luminosity += entry.getValue();
 		}
 		

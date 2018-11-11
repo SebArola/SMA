@@ -1,15 +1,19 @@
+package controller;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.Random;
 
+import agents.Ampoule;
+import env.Salle;
 import fr.irit.smac.amak.Agent;
 import fr.irit.smac.amak.Amas;
 import fr.irit.smac.amak.Scheduling;
 import fr.irit.smac.amak.ui.MainWindow;
 import fr.irit.smac.amak.ui.VUI;
 import fr.irit.smac.lxplot.LxPlot;
+import ressources.Area;
 
 /**
  * This class represents the AMAS
@@ -19,7 +23,7 @@ public class DrAmas extends Amas<Salle> {
 
 	private ArrayList<Ampoule> ampoules;
 	
-	public final static int NBAMPOULE = 90;
+	public final static int NBAMPOULE = 49;
 	/**
 	 * Queue used to compute the sliding window
 	 */
@@ -42,16 +46,19 @@ public class DrAmas extends Amas<Salle> {
 	@Override
 	protected void onInitialAgentsCreation() {
 		this.ampoules = new ArrayList<Ampoule>();
-		int x =1;
+		/*int x =1;
 		int y =1;
 		for(int i = 0 ; i < NBAMPOULE;i++) {
 			if (x>(100/NBAMPOULE)*NBAMPOULE) {
 				x=1;
 				y+=14;
 			}
+			System.out.println("new ampoule "+x+","+y);
 			this.ampoules.add(new Ampoule(this, x, y));
 			x+=14;
-		}
+		}*/
+		
+		//this.ampoules.add(new Ampoule(this, 10, 50));
 
 	}
 

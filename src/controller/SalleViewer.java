@@ -1,10 +1,13 @@
+package controller;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import env.Salle;
 import fr.irit.smac.amak.Agent;
 import fr.irit.smac.amak.Scheduling;
 import fr.irit.smac.amak.ui.DrawableUI;
+import ressources.Area;
 
 /**
  * This class is used to display the environment and the drones

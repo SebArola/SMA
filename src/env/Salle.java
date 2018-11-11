@@ -1,8 +1,12 @@
+package env;
 import java.util.ArrayList;
 import java.util.Random;
 
 import fr.irit.smac.amak.Environment;
 import fr.irit.smac.amak.Scheduling;
+import ressources.Area;
+import ressources.source.Door;
+import ressources.source.Window;
 
 /**
  * This class represents the environment of the AMAS which is the world (or at
@@ -19,10 +23,9 @@ public class Salle extends Environment {
 	 */
 	private Area[][] areas;
 
-	private Area[] windows;
-	private Area[] doors;
-	
-	
+	private Window[] windows;
+	private Door[] doors;
+
 	/**
 	 * Number of areas in width
 	 */
@@ -50,50 +53,35 @@ public class Salle extends Environment {
 			}
 		}
 
-		this.windows = new Area[9];
+		this.windows = new Window[9];
 		for (int i = 1; i < 10; i += 1) {
 			// this.windows[i - 1] = areas[50][0];
-			this.windows[i - 1] = areas[i * 10][0];
+			this.windows[i - 1] = new Window(areas[i * 10][0], this);
 		}
-		this.doors = new Area[] { areas[10][99], areas[90][99] };
-		
-		
-		
+		this.doors = new Door[] { new Door(areas[10][99], this), new Door(areas[90][99], this) };
+
 	}
 
-	private float getAmbiantLuminosity() {
+	public float getAmbiantLuminosity() {
 		float l;
-		float delta = Math.abs(14 - this.hour);
+		float delta = Math.abs(14 - (this.hour+this.minutes/60));
 		if (delta >= 7) {
 			l = 0.2f;
 		} else {
-			l = delta / 7;
+			l = (7 - delta) / 7;
 		}
 		return l;
 	}
 
-	private float getWindowLuminosity() {
+	/*public float getWindowLuminosity() {
 		return this.getAmbiantLuminosity() * 0.8f;
 	}
 
-	private float getDoorLuminosity() {
+	public float getDoorLuminosity() {
 		return this.getAmbiantLuminosity() * 0.25f;
-	}
+	}*/
 
-	private float getNoise() {
-		Random r = new Random();
-		float noise;
-		if (r.nextBoolean()) {
-			noise = r.nextFloat() / 10;
-		} else {
-			noise = -r.nextFloat() / 10;
-		}
-		return noise;
-	}
-
-	private float applyNoise(float value) {
-		return Math.max(0, Math.min(value + getNoise(), 1));
-	}
+	
 
 	/**
 	 * Inform each area at each cycle, 1 cycle = 1 minute
@@ -101,7 +89,7 @@ public class Salle extends Environment {
 	@Override
 	public void onCycle() {
 
-		//this.resetLuminosity();
+		// this.resetLuminosity();
 
 		this.minutes += 1;
 		if (this.minutes == 60) {
@@ -112,16 +100,18 @@ public class Salle extends Environment {
 			this.hour = 0;
 		}
 
-		System.out.println(this.hour + " heures et " + this.minutes + " minutes");
+		System.out.println(this.hour + " heures et " + this.minutes + " minutes avec " + this.getAmbiantLuminosity());
 
-		for (Area area : this.windows) {
-			System.out.println("new window at " + area);
-			this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); // return;
+		for (Window window : this.windows) {
+			// System.out.println("new window at " + area);
+			window.cycle();
+			//this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); // return;
 		}
 
-		for (Area area : this.doors) {
-			System.out.println("new door at " + area);
-			this.illuminateByCone(area, 55, this.getDoorLuminosity(), true);
+		for (Door door : this.doors) {
+			door.cycle();
+			// System.out.println("new door at " + area);
+			//this.illuminateByCone(area, 55, this.getDoorLuminosity(), true);
 		}
 
 		for (int x = 0; x < WIDTH; x++) {
@@ -132,16 +122,14 @@ public class Salle extends Environment {
 
 	}
 
-	/*private void resetLuminosity() {
-		for (int x = 0; x < WIDTH; x++) {
-			for (int y = 0; y < HEIGHT; y++) {
-				areas[y][x].resetLuminosity();
-			}
-		}
+	/*
+	 * private void resetLuminosity() { for (int x = 0; x < WIDTH; x++) { for (int y
+	 * = 0; y < HEIGHT; y++) { areas[y][x].resetLuminosity(); } }
+	 * 
+	 * }
+	 */
 
-	}*/
-
-	private void illuminateByCone(Area departure, int maxDistance, float luminosity, boolean inverse) {
+	/*private void illuminateByCone(Area departure, int maxDistance, float luminosity, boolean inverse) {
 		for (Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance, inverse)) {
 
 			double distance = Math.hypot(departure.getX() - area.getX(), departure.getY() - area.getY());
@@ -149,7 +137,7 @@ public class Salle extends Environment {
 			if (distance > maxDistance) {
 				ratioDistance = 0;
 			}
-			float noisedL = applyNoise(luminosity);
+			float noisedL = applyNoise(luminosity);*/
 
 			/*
 			 * assert (ratioDistance >= 0); assert (ratioDistance <= 1); assert (noisedL >=
@@ -162,16 +150,16 @@ public class Salle extends Environment {
 
 			// System.out.println(ratioDistance * noisedL);
 
-			area.addLuminosity(departure, ratioDistance * noisedL);
+			/*area.addLuminosity(departure, ratioDistance * noisedL);
 		}
-	}
+	}*/
 
 	public ArrayList<Area> getAreaAround(int x, int y, int radius) {
 		ArrayList<Area> area_around = new ArrayList<Area>();
 		for (int i = x - radius; i < x + radius; i++) {
 			for (int j = y - radius; j < y + radius; j++) {
-				if(j>=0 && j< WIDTH && i>=0 && i< HEIGHT)
-					area_around.add(this.areas[i][j]);
+				if (j >= 0 && j < WIDTH && i >= 0 && i < HEIGHT)
+					area_around.add(this.areas[j][i]);
 			}
 		}
 		return area_around;
@@ -193,7 +181,8 @@ public class Salle extends Environment {
 				// System.out.println(newX + "," + newY);
 				// System.out.println(this.areas.length);
 				if (newX < HEIGHT && newY < WIDTH && newX >= 0 && newY >= 0) {
-					//System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					// System.out.println(this.areas[newX][newY].getX() + "," +
+					// this.areas[newX][newY].getY());
 					areaCone.add(this.areas[newX][newY]);
 				}
 
@@ -203,7 +192,8 @@ public class Salle extends Environment {
 
 					// System.out.println(newX + "," + (x - j));
 
-					//System.out.println(this.areas[newX][newY].getX() + "," + this.areas[newX][newY].getY());
+					// System.out.println(this.areas[newX][newY].getX() + "," +
+					// this.areas[newX][newY].getY());
 					areaCone.add(this.areas[newX][newY]);
 				}
 			}
