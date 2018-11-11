@@ -23,7 +23,8 @@ public class DrAmas extends Amas<Salle> {
 
 	private ArrayList<Ampoule> ampoules;
 	
-	public final static int NBAMPOULE = 0;
+	public final static int NBAMPOULE = 16;
+
 	/**
 	 * Queue used to compute the sliding window
 	 */
@@ -46,16 +47,16 @@ public class DrAmas extends Amas<Salle> {
 	@Override
 	protected void onInitialAgentsCreation() {
 		this.ampoules = new ArrayList<Ampoule>();
-		int x =1;
-		int y =1;
+		int x =12;
+		int y =12;
 		for(int i = 0 ; i < NBAMPOULE;i++) {
 			if (x>(100/NBAMPOULE)*NBAMPOULE) {
-				x=1;
-				y+=14;
+				x=12;
+				y+=25;
 			}
 			System.out.println("new ampoule "+x+","+y);
 			this.ampoules.add(new Ampoule(this, x, y));
-			x+=14;
+			x+=25;
 		}
 		
 		//this.ampoules.add(new Ampoule(this, 10, 50));
@@ -98,10 +99,12 @@ public class DrAmas extends Amas<Salle> {
 	protected void onSystemCycleEnd() {
 		double min = 1;
 		double sum = 0;
+		int nbCase = 0;
 		for (int x = 0; x < getEnvironment().getAreas()[0].length; x++) {
 			for (int y = 0; y < getEnvironment().getAreas().length; y++) {
 				double lum = getEnvironment().getAreaByPosition(x, y).getLuminosity();
 				sum += lum;
+				nbCase ++;
 				if (lum < min)
 					min = lum;
 			}
@@ -111,8 +114,9 @@ public class DrAmas extends Amas<Salle> {
 		if (lastSums.size() > 10000)
 			lastSums.poll();
 
-		LxPlot.getChart("Area criticalities").add("Sum", getCycle() % 1000, sum);
-		LxPlot.getChart("Area criticalities").add("Sliding average", getCycle() % 1000, average(lastSums));
+//		LxPlot.getChart("Luminosite").add("Lum total", getCycle() % 1000, sum);
+//		LxPlot.getChart("Luminosite").add("Lum total moyenne", getCycle() % 1000, average(lastSums));
+		LxPlot.getChart("Luminosite").add("Lum moyenne", getCycle() % 1000, sum/nbCase);
 	}
 
 	/**
