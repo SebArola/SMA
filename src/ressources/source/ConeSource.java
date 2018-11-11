@@ -22,7 +22,7 @@ public abstract class ConeSource extends Source {
 		} else {
 			noise = -r.nextDouble() / 20;
 		}
-		return noise;
+		return 0;
 	}
 
 	private double applyNoise(double value) {
