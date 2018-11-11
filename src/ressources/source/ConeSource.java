@@ -7,14 +7,11 @@ import env.Salle;
 import ressources.Area;
 
 public abstract class ConeSource extends Source {
-
-	private boolean inverse;
 	private double ratio;
 
-	public ConeSource(Area position, int maxDistance, Salle env, double ratio, boolean inverse) {
+	public ConeSource(Area position, int maxDistance, Salle env, double ratio) {
 		super(position, maxDistance, env);
 		this.ratio = ratio;
-		this.inverse = inverse;
 	}
 
 	private double getNoise() {
@@ -38,7 +35,9 @@ public abstract class ConeSource extends Source {
 	}
 
 	protected List<Area> getAffectedArea() {
-		return env.getAreaByCone(this.position.getX(), this.position.getY(), this.maxDistance, this.inverse);
+		return env.getAreaByCone(this.position.getX(), this.position.getY(), this.maxDistance, this.getInverse());
 	}
+
+	protected abstract boolean getInverse();
 
 }

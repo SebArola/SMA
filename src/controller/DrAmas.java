@@ -46,7 +46,7 @@ public class DrAmas extends Amas<Salle> {
 	@Override
 	protected void onInitialAgentsCreation() {
 		this.ampoules = new ArrayList<Ampoule>();
-		/*int x =1;
+		int x =1;
 		int y =1;
 		for(int i = 0 ; i < NBAMPOULE;i++) {
 			if (x>(100/NBAMPOULE)*NBAMPOULE) {
@@ -56,7 +56,7 @@ public class DrAmas extends Amas<Salle> {
 			System.out.println("new ampoule "+x+","+y);
 			this.ampoules.add(new Ampoule(this, x, y));
 			x+=14;
-		}*/
+		}
 		
 		//this.ampoules.add(new Ampoule(this, 10, 50));
 
