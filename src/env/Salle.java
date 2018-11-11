@@ -35,8 +35,8 @@ public class Salle extends Environment {
 	 */
 	public final static int HEIGHT = 100;
 
-	private int minutes;
-	private int hour;
+	private int minutes = 30;
+	private int hour = 7;
 
 	private float ambiantLuminosity;
 
