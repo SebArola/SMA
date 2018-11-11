@@ -1,4 +1,5 @@
 package env;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -67,27 +68,25 @@ public class Salle extends Environment {
 	public float getAmbiantLuminosity() {
 		return this.ambiantLuminosity;
 	}
-	
+
 	public void computeAmbiantLuminosity() {
-		float delta = Math.abs(14 - (this.hour+this.minutes/60f));
+		float delta = Math.abs(14 - (this.hour + this.minutes / 60f));
 		if (delta >= 7) {
 			this.ambiantLuminosity = 0.07f;
 			System.out.println("nuit");
 		} else {
-			System.out.println("jour with "+delta);
-			this.ambiantLuminosity = (7 - delta) / 7;
+			System.out.println("jour with " + delta);
+			this.ambiantLuminosity = (7 - delta) / 7 * 0.2f + 0.07f;
 		}
 	}
 
-	/*public float getWindowLuminosity() {
-		return this.getAmbiantLuminosity() * 0.8f;
-	}
-
-	public float getDoorLuminosity() {
-		return this.getAmbiantLuminosity() * 0.25f;
-	}*/
-
-	
+	/*
+	 * public float getWindowLuminosity() { return this.getAmbiantLuminosity() *
+	 * 0.8f; }
+	 * 
+	 * public float getDoorLuminosity() { return this.getAmbiantLuminosity() *
+	 * 0.25f; }
+	 */
 
 	/**
 	 * Inform each area at each cycle, 1 cycle = 1 minute
@@ -112,13 +111,14 @@ public class Salle extends Environment {
 		for (Window window : this.windows) {
 			// System.out.println("new window at " + area);
 			window.cycle();
-			//this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); // return;
+			// this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); //
+			// return;
 		}
 
 		for (Door door : this.doors) {
 			door.cycle();
 			// System.out.println("new door at " + area);
-			//this.illuminateByCone(area, 55, this.getDoorLuminosity(), true);
+			// this.illuminateByCone(area, 55, this.getDoorLuminosity(), true);
 		}
 
 		for (int x = 0; x < WIDTH; x++) {
@@ -136,30 +136,31 @@ public class Salle extends Environment {
 	 * }
 	 */
 
-	/*private void illuminateByCone(Area departure, int maxDistance, float luminosity, boolean inverse) {
-		for (Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance, inverse)) {
+	/*
+	 * private void illuminateByCone(Area departure, int maxDistance, float
+	 * luminosity, boolean inverse) { for (Area area :
+	 * getAreaByCone(departure.getX(), departure.getY(), maxDistance, inverse)) {
+	 * 
+	 * double distance = Math.hypot(departure.getX() - area.getX(), departure.getY()
+	 * - area.getY()); double ratioDistance = 1 - (distance / maxDistance); if
+	 * (distance > maxDistance) { ratioDistance = 0; } float noisedL =
+	 * applyNoise(luminosity);
+	 */
 
-			double distance = Math.hypot(departure.getX() - area.getX(), departure.getY() - area.getY());
-			double ratioDistance = 1 - (distance / maxDistance);
-			if (distance > maxDistance) {
-				ratioDistance = 0;
-			}
-			float noisedL = applyNoise(luminosity);*/
+	/*
+	 * assert (ratioDistance >= 0); assert (ratioDistance <= 1); assert (noisedL >=
+	 * 0); assert (noisedL <= 1);
+	 */
 
-			/*
-			 * assert (ratioDistance >= 0); assert (ratioDistance <= 1); assert (noisedL >=
-			 * 0); assert (noisedL <= 1);
-			 */
+	// System.out.println("lum : " + luminosity + " ratioDistance " + ratioDistance
+	// + " noised " + noisedL
+	// + " distance " + distance);
 
-			// System.out.println("lum : " + luminosity + " ratioDistance " + ratioDistance
-			// + " noised " + noisedL
-			// + " distance " + distance);
+	// System.out.println(ratioDistance * noisedL);
 
-			// System.out.println(ratioDistance * noisedL);
-
-			/*area.addLuminosity(departure, ratioDistance * noisedL);
-		}
-	}*/
+	/*
+	 * area.addLuminosity(departure, ratioDistance * noisedL); } }
+	 */
 
 	public ArrayList<Area> getAreaAround(int x, int y, int radius) {
 		ArrayList<Area> area_around = new ArrayList<Area>();
