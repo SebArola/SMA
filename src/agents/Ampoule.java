@@ -127,9 +127,10 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		}
 		sum /= nbZone;
 		if (sum < this.lumMoy) {
-			this.source.setLuminosity(this.source.getLuminosity()+this.augmentationLum);
+			
+			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
 		}else {
-			this.source.setLuminosity(this.source.getLuminosity()-this.augmentationLum);
+			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
 		}
 	}
 }
