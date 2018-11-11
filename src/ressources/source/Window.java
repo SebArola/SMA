@@ -5,7 +5,7 @@ import ressources.Area;
 public class Window extends ConeSource {
 	
 	public Window(Area position, Salle env) {
-		super(position, 55, env, 0.8);
+		super(position, 100, env, 0.8);
 	}
 
 	@Override
