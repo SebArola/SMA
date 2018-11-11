@@ -15,9 +15,9 @@ public class ControllableRoundSource extends Source {
 
 	protected List<Area> getAffectedArea() {
 		//System.out.println(position);
-		System.out.println("new ampoule");
+		//System.out.println("new ampoule");
 		for(Area a: env.getAreaAround(position.getX(), position.getY(), this.maxDistance)) {
-			System.out.println(a);
+			//System.out.println(a);
 		}
 		return env.getAreaAround(position.getX(), position.getY(), this.maxDistance);
 	}

@@ -1,4 +1,5 @@
 package ressources.source;
+
 import java.util.List;
 import ressources.Area;
 import env.Salle;
@@ -16,16 +17,15 @@ public abstract class Source {
 		this.env = env;
 		this.area = this.getAffectedArea();
 	}
-	
-	
-	
+
 	protected abstract List<Area> getAffectedArea();
+
 	public abstract double getLuminosity();
 
 	public void cycle() {
-		
+
 		double l = this.getLuminosity();
-		
+
 		for (Area area : this.area) {
 
 			double distance = Math.hypot(position.getX() - area.getX(), position.getY() - area.getY());
@@ -33,7 +33,6 @@ public abstract class Source {
 			if (distance > maxDistance) {
 				ratioDistance = 0;
 			}
-			
 
 			/*
 			 * assert (ratioDistance >= 0); assert (ratioDistance <= 1); assert (noisedL >=
@@ -48,5 +47,13 @@ public abstract class Source {
 
 			area.addLuminosity(this, ratioDistance * l);
 		}
+	}
+
+	public int getX() {
+		return this.position.getX();
+	}
+
+	public int getY() {
+		return this.position.getY();
 	}
 }

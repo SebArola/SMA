@@ -2,9 +2,6 @@ package agents;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import controller.DrAmas;
 import env.Salle;
@@ -132,5 +129,9 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 		}else if(sum > this.lumMoy+0.05f ) {
 			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
 		}
+	}
+
+	public double getLuminosity() {
+		return this.source.getLuminosity();
 	}
 }

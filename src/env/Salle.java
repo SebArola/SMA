@@ -40,6 +40,10 @@ public class Salle extends Environment {
 	private int hour = 6;
 
 	private float ambiantLuminosity;
+	
+	public int getHour() {
+		return this.hour;
+	}
 
 	/**
 	 * Create the various areas
@@ -63,6 +67,10 @@ public class Salle extends Environment {
 		}
 		this.doors = new Door[] { new Door(areas[10][99], this), new Door(areas[90][99], this) };
 
+	}
+	
+	public Door[] getDoors() {
+		return this.doors;
 	}
 
 	public float getAmbiantLuminosity() {
