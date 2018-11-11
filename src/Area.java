@@ -1,4 +1,6 @@
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import fr.irit.smac.amak.Agent;
@@ -29,6 +31,7 @@ public class Area {
 	 */
 	private DrawableRectangle drawable;
 	private double luminosity = 0;
+	private Map<Object, Double> sources;
 	// private double luminosity = new Random().nextDouble();
 
 	/**
@@ -41,29 +44,30 @@ public class Area {
 		// Set the position
 		this.x = x;
 		this.y = y;
+		
+		this.sources = new HashMap<Object, Double>();
 
 		drawable = VUI.get().createRectangle(x * 10, y * 10, 10, 10);
 		drawable.setLayer(0);
 	}
 
-	/*public void setLuminosity(double lum) {
-		if(lum != 0f) {
+	/*
+	 * public void setLuminosity(double lum) { if(lum != 0f) {
+	 * 
+	 * this.luminosity = 1f; }else {
+	 * 
+	 * this.luminosity = 0f; } this.luminosity = lum; }
+	 */
 
-			this.luminosity = 1f;
-		}else {
-
-			this.luminosity = 0f;
-		}
-		this.luminosity = lum;
-	}*/
-	
-	public void addLuminosity(double lum) {
-		this.luminosity = Math.min(lum+luminosity, 1f);
+	public void addLuminosity(Object source, double lum) {
 		
+		this.sources.put(source, lum);
+		
+		//this.luminosity = Math.min(lum + luminosity, 1f);
+
 	}
-	
-	
-	public void resetLuminosity() {
+
+	private void resetLuminosity() {
 		this.luminosity = 0f;
 	}
 
@@ -107,6 +111,14 @@ public class Area {
 	 * Update the time since last scan at each cycle
 	 */
 	public void cycle() {
+		
+		this.resetLuminosity();
+		
+		for(Map.Entry<Object, Double> entry : this.sources.entrySet()) {
+			this.luminosity += entry.getValue();
+		}
+		
+		this.luminosity = Math.min(this.luminosity, 1f);
 
 		try {
 			drawable.setColor(new Color((float) luminosity, (float) luminosity, 0f));

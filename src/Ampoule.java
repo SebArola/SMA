@@ -49,7 +49,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	public Ampoule(DrAmas amas, int x, int y) {
 		super(amas, x, y);
 		this.zoneEclaire = new ArrayList<Area>();
-		this.luminosite = 0.5f;
+		this.luminosite = 0.1f;
 		this.rayonDeclairage = 15;
 	}
 
@@ -96,8 +96,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	protected void onAct() {
 		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx, this.dy, this.rayonDeclairage));
 		for (Area area : this.zoneEclaire) {
-			area.addLuminosity(this.luminosite);
-			System.out.println(area.getLuminosity());
+			area.addLuminosity(this, this.luminosite);
+			//System.out.println(area.getLuminosity());
 		}
 		
 	}

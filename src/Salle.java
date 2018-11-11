@@ -101,7 +101,7 @@ public class Salle extends Environment {
 	@Override
 	public void onCycle() {
 
-		this.resetLuminosity();
+		//this.resetLuminosity();
 
 		this.minutes += 1;
 		if (this.minutes == 60) {
@@ -132,14 +132,14 @@ public class Salle extends Environment {
 
 	}
 
-	private void resetLuminosity() {
+	/*private void resetLuminosity() {
 		for (int x = 0; x < WIDTH; x++) {
 			for (int y = 0; y < HEIGHT; y++) {
 				areas[y][x].resetLuminosity();
 			}
 		}
 
-	}
+	}*/
 
 	private void illuminateByCone(Area departure, int maxDistance, float luminosity, boolean inverse) {
 		for (Area area : getAreaByCone(departure.getX(), departure.getY(), maxDistance, inverse)) {
@@ -162,7 +162,7 @@ public class Salle extends Environment {
 
 			// System.out.println(ratioDistance * noisedL);
 
-			area.addLuminosity(ratioDistance * noisedL);
+			area.addLuminosity(departure, ratioDistance * noisedL);
 		}
 	}
 
@@ -170,7 +170,7 @@ public class Salle extends Environment {
 		ArrayList<Area> area_around = new ArrayList<Area>();
 		for (int i = x - radius; i < x + radius; i++) {
 			for (int j = y - radius; j < y + radius; j++) {
-				if(j>=0 && j<= 100 && i>=0 && i<= 100)
+				if(j>=0 && j< WIDTH && i>=0 && i< HEIGHT)
 					area_around.add(this.areas[i][j]);
 			}
 		}

@@ -19,7 +19,7 @@ public class DrAmas extends Amas<Salle> {
 
 	private ArrayList<Ampoule> ampoules;
 	
-	public final static int NBAMPOULE = 1;
+	public final static int NBAMPOULE = 90;
 	/**
 	 * Queue used to compute the sliding window
 	 */
