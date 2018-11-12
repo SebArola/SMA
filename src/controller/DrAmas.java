@@ -28,6 +28,7 @@ public class DrAmas extends Amas<Salle> {
 	private ArrayList<Eleve> eleves;
 
 	public final static int NBAMPOULE = 16;
+	//public final static int NBAMPOULE = 1;
 	public final static int NBELEVES = 30;
 	private int totalSum = 0;
 
@@ -44,6 +45,16 @@ public class DrAmas extends Amas<Salle> {
 	public DrAmas(Salle env) {
 		// Set the environment and use manual scheduling
 		super(env, Scheduling.DEFAULT);
+	}
+	
+	public boolean isClassEmpty() {
+		boolean empty = true;
+		for(Eleve e : this.eleves) {
+			if(e.isPresent()) {
+				empty = false;
+			}
+		}
+		return empty;
 	}
 
 	/**
