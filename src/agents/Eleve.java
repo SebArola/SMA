@@ -26,6 +26,8 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 	private boolean arrived;
 
+	private boolean departure;
+
 	public Eleve(DrAmas amas, int x, int y, Area place) {
 		super(amas, x, y);
 
@@ -78,15 +80,13 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 		Salle env = getAmas().getEnvironment();
 		
-		if(env.getHour() > this.end && this.arrived) {
-			this.drawable.hide();
-		}
+		
 
 		if (env.getHour() < this.start) {
 			this.drawable.hide();
 			return;
-		} else if (env.getHour() > this.end) {
-			this.arrived = false;
+		} else if (env.getHour() >= this.end) {
+			this.departure = true;
 			this.place = this.startArea;
 		}
 
@@ -94,10 +94,14 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 		if (dx == place.getX() && dy == place.getY()) {
 			this.arrived = true;
-			
+			this.departure = false;
 		}
 		
-		if(this.arrived) {
+		if(env.getHour() >= this.end && !this.departure) {
+			this.drawable.hide();
+		}
+		
+		if(this.arrived && !this.departure) {
 			return;
 		}
 
