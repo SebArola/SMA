@@ -119,7 +119,7 @@ public class DrAmas extends Amas<Salle> {
 	 */
 	public static void main(String[] args) {
 
-		VUI.get().setDefaultView(100, -400, -300);
+		VUI.get().setDefaultView(60, -500, -500);
 		DrAmas drAmas = new DrAmas(new Salle());
 
 		new SalleViewer(drAmas);

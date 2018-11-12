@@ -30,5 +30,9 @@ public class ControllableRoundSource extends Source {
 	public void setLuminosity(double luminosity) {
 		this.luminosity = luminosity;
 	}
+	
+	public List<Area> getLightArea() {
+		return this.area;
+	}
 
 }

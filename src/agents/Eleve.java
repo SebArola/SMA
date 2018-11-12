@@ -50,7 +50,8 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		// drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
 		drawable = VUI.get().createImage(dx * 10, dy * 10, "data/eleve.png");
 		drawable.setLayer(1);
-		drawable.setColor(Color.RED);
+		//drawable.setColor(Color.RED);
+		drawable.hide();
 	}
 
 	/**
@@ -75,47 +76,13 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	public boolean isPresent() {
 		return this.drawable.isVisible();
 	}
-
-	/**
-	 * Agent action phase.
-	 */
-	@Override
-	protected void onAct() {
+	
+	private void move() {
+		
 
 		Salle env = getAmas().getEnvironment();
-		
-		
-
-		if (env.getHour() < this.start) {
-			this.drawable.hide();
-			return;
-		} else if (env.getHour() >= this.end) {
-			this.departure = true;
-			this.place = this.startArea;
-		}
-
-		this.drawable.show();
-
-		if (dx == place.getX() && dy == place.getY()) {
-			this.arrived = true;
-			this.departure = false;
-		}
-		
-		if(env.getHour() >= this.end && !this.departure) {
-			this.drawable.hide();
-		}
-		
-		if(this.arrived && !this.departure) {
-			return;
-		}
-
 		Map<Area, Double> distances = new HashMap<Area, Double>();
-
-		/*
-		 * double distanceXP = Float.MAX_VALUE; double distanceYM = Float.MAX_VALUE;
-		 * double distanceXM = Float.MAX_VALUE; double distanceYP = Float.MAX_VALUE;
-		 */
-
+		
 		int x;
 		int y;
 
@@ -151,6 +118,50 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 		this.dx = next.getX();
 		this.dy = next.getY();
+	}
+
+	/**
+	 * Agent action phase.
+	 */
+	@Override
+	protected void onAct() {
+
+		Salle env = getAmas().getEnvironment();
+		
+		
+
+		if (env.getHour() < this.start) {
+			this.drawable.hide();
+			return;
+		} else if (env.getHour() >= this.end) {
+			this.departure = true;
+			this.place = this.startArea;
+		}
+
+		this.drawable.show();
+
+		if (dx == place.getX() && dy == place.getY()) {
+			this.arrived = true;
+			this.departure = false;
+		}
+		
+		if(env.getHour() >= this.end && !this.departure) {
+			this.drawable.hide();
+		}
+		
+		if(this.arrived && !this.departure) {
+			return;
+		}
+
+		/*
+		 * double distanceXP = Float.MAX_VALUE; double distanceYM = Float.MAX_VALUE;
+		 * double distanceXM = Float.MAX_VALUE; double distanceYP = Float.MAX_VALUE;
+		 */
+
+		this.move();
+		this.move();
+		this.move();
+		this.move();
 
 	}
 
