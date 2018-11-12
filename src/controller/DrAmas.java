@@ -166,7 +166,7 @@ public class DrAmas extends Amas<Salle> {
 		LxPlot.getChart("Luminosite").add("Lum moyenne", getCycle() % 1000, sum / nbCase);
 
 		// LxPlot.getChart("Consommation").add("Totale", getCycle() % 1000, totalSum);
-		LxPlot.getChart("Consommation").add("Instantannée", getCycle() % 1000, sum);
+		
 
 		sum = 0;
 		for (Ampoule a : this.ampoules) {
@@ -179,7 +179,7 @@ public class DrAmas extends Amas<Salle> {
 
 //		LxPlot.getChart("Luminosite").add("Lum total", getCycle() % 1000, sum);
 //		LxPlot.getChart("Luminosite").add("Lum total moyenne", getCycle() % 1000, average(lastSums));
-
+		LxPlot.getChart("Consommation").add("Instantannée", getCycle() % 1000, sum);
 		LxPlot.getChart("Luminosite").add("Lum ambiante", getCycle() % 1000, env.getAmbiantLuminosity());
 		LxPlot.getChart("Luminosite").add("Lum ampoules moyenne", getCycle() % 1000, sum / this.ampoules.size());
 
