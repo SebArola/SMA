@@ -71,6 +71,10 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	public int getY() {
 		return dy;
 	}
+	
+	public boolean isPresent() {
+		return this.drawable.isVisible();
+	}
 
 	/**
 	 * Agent action phase.

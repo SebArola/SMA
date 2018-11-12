@@ -46,6 +46,16 @@ public class DrAmas extends Amas<Salle> {
 		// Set the environment and use manual scheduling
 		super(env, Scheduling.DEFAULT);
 	}
+	
+	public boolean isClassEmpty() {
+		boolean empty = true;
+		for(Eleve e : this.eleves) {
+			if(e.isPresent()) {
+				empty = false;
+			}
+		}
+		return empty;
+	}
 
 	/**
 	 * Create the agents at random positions
