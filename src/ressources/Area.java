@@ -1,4 +1,5 @@
 package ressources;
+
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,10 +16,6 @@ import ressources.source.Source;
  *
  */
 public class Area {
-	/**
-	 * The amount of time (in cycles) since when the area hasn't been scanned
-	 */
-	private double timeSinceLastSeen = 1000;
 	/**
 	 * The X coordinate of the area
 	 */
@@ -46,7 +43,7 @@ public class Area {
 		// Set the position
 		this.x = x;
 		this.y = y;
-		
+
 		this.sources = new HashMap<Source, Double>();
 
 		drawable = VUI.get().createRectangle(x * 10, y * 10, 10, 10);
@@ -62,10 +59,10 @@ public class Area {
 	 */
 
 	public void addLuminosity(Source source, double lum) {
-		
+
 		this.sources.put(source, lum);
-		
-		//this.luminosity = Math.min(lum + luminosity, 1f);
+
+		// this.luminosity = Math.min(lum + luminosity, 1f);
 
 	}
 
@@ -113,14 +110,17 @@ public class Area {
 	 * Update the time since last scan at each cycle
 	 */
 	public void cycle() {
-		
+
 		this.resetLuminosity();
-		
-		for(Map.Entry<Source, Double> entry : this.sources.entrySet()) {
+
+		for (Map.Entry<Source, Double> entry : this.sources.entrySet()) {
 			this.luminosity += entry.getValue();
 		}
-		
+
 		this.luminosity = Math.min(this.luminosity, 1f);
+		if (this.sources.size() > 1) {
+			this.luminosity /= 2;
+		}
 
 		try {
 			drawable.setColor(new Color((float) luminosity, (float) luminosity, 0f));

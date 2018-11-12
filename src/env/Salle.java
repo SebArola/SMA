@@ -80,11 +80,11 @@ public class Salle extends Environment {
 	public void computeAmbiantLuminosity() {
 		float delta = Math.abs(14 - (this.hour + this.minutes / 60f));
 		if (delta >= 7) {
-			this.ambiantLuminosity = 0.07f;
+			this.ambiantLuminosity = 0.15f;
 			System.out.println("nuit");
 		} else {
 			System.out.println("jour with " + delta);
-			this.ambiantLuminosity = (7 - delta) / 7 * 0.2f + 0.07f;
+			this.ambiantLuminosity = (7 - delta) / 7 * 0.7f + 0.15f;
 		}
 	}
 
@@ -119,6 +119,7 @@ public class Salle extends Environment {
 		for (Window window : this.windows) {
 			// System.out.println("new window at " + area);
 			window.cycle();
+			//break;
 			// this.illuminateByCone(area, 55, this.getWindowLuminosity(), false); //
 			// return;
 		}
@@ -185,9 +186,10 @@ public class Salle extends Environment {
 		ArrayList<Area> areaCone = new ArrayList<Area>();
 
 		// areaCone.add(this.areas[x][y]);
+		int startSize = 7;
 
 		for (int i = 0; i < maxDistance; i += 1) {
-			for (int j = 0; j <= i; j += 1) {
+			for (int j = 0; j <= i+startSize; j += 1) {
 				int newX = y + j;
 
 				int newY = x + i;

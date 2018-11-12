@@ -27,8 +27,8 @@ public class DrAmas extends Amas<Salle> {
 	private ArrayList<Ampoule> ampoules;
 	private ArrayList<Eleve> eleves;
 
-	public final static int NBAMPOULE = 16;
-	//public final static int NBAMPOULE = 1;
+	//public final static int NBAMPOULE = 16;
+	public final static int NBAMPOULE = 0;
 	public final static int NBELEVES = 30;
 	private int totalSum = 0;
 
