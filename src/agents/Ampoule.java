@@ -115,20 +115,25 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onDecide() {
-		this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx,this.dy, this.rayonDeclairage));
+		if(!this.amas.isClassEmpty()) {
+			this.zoneEclaire.addAll(getAmas().getEnvironment().getAreaAround(this.dx,this.dy, this.rayonDeclairage));
 
-		double nbZonePasEclaire = 0.0;
-		double nbZone = 0.0;
-		for (Area area : this.zoneEclaire) {
-			if(area.getLuminosity()<this.lumMoy) {
-				nbZonePasEclaire++;
+			double nbZonePasEclaire = 0.0;
+			double nbZone = 0.0;
+			for (Area area : this.zoneEclaire) {
+				if(area.getLuminosity()<this.lumMoy) {
+					nbZonePasEclaire++;
+				}
+				nbZone++;
 			}
-			nbZone++;
-		}
-		if (nbZonePasEclaire/nbZone >0.2) {
-			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
-		}else{
-			this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
+			if (nbZonePasEclaire/nbZone >0.2) {
+				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
+			}else{
+				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
+			}
+
+		}else {
+			this.source.setLuminosity(0.0);
 		}
 	}
 
