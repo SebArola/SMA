@@ -96,6 +96,10 @@ public class Eleve extends Agent<DrAmas, Salle> {
 			this.arrived = true;
 			
 		}
+		
+		if(this.arrived) {
+			return;
+		}
 
 		Map<Area, Double> distances = new HashMap<Area, Double>();
 
