@@ -3,6 +3,7 @@ package agents;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import controller.DrAmas;
 import env.Salle;
@@ -28,6 +29,8 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 	private boolean departure;
 
+	private Drawable drawableMad;
+
 	public Eleve(DrAmas amas, int x, int y, Area place) {
 		super(amas, x, y);
 
@@ -49,9 +52,12 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	protected void onRenderingInitialization() {
 		// drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
 		drawable = VUI.get().createImage(dx * 10, dy * 10, "data/eleve.png");
+		drawableMad = VUI.get().createImage(dx * 10, dy * 10, "data/eleve_mad.png");
+		drawableMad.setLayer(1);
 		drawable.setLayer(1);
-		//drawable.setColor(Color.RED);
+		// drawable.setColor(Color.RED);
 		drawable.hide();
+		drawableMad.hide();
 	}
 
 	/**
@@ -72,39 +78,58 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	public int getY() {
 		return dy;
 	}
-	
+
 	public boolean isPresent() {
 		return this.drawable.isVisible();
 	}
-	
-	private void move() {
-		
+
+	private void move(boolean random) {
 
 		Salle env = getAmas().getEnvironment();
 		Map<Area, Double> distances = new HashMap<Area, Double>();
-		
+
 		int x;
 		int y;
 
 		x = dx + 1;
 		y = dy;
 		if (x < 100) {
-			distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			if (random) {
+				distances.put(env.getAreaByPosition(x, y), new Random().nextDouble());
+			} else {
+				distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			}
+
 		}
 		x = dx;
 		y = dy + 1;
 		if (y < 100) {
-			distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			if (random) {
+				distances.put(env.getAreaByPosition(x, y), new Random().nextDouble());
+			} else {
+				distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			}
+
 		}
 		x = dx - 1;
 		y = dy;
 		if (x >= 0) {
-			distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			if (random) {
+				distances.put(env.getAreaByPosition(x, y), new Random().nextDouble());
+			} else {
+				distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			}
+
 		}
 		x = dx;
 		y = dy - 1;
 		if (y >= 0) {
-			distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			if (random) {
+				distances.put(env.getAreaByPosition(x, y), new Random().nextDouble());
+			} else {
+				distances.put(env.getAreaByPosition(x, y), Math.hypot(x - place.getX(), y - place.getY()));
+			}
+
 		}
 
 		Area next = null;
@@ -120,6 +145,18 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		this.dy = next.getY();
 	}
 
+	private boolean isHappy() {
+		Salle env = getAmas().getEnvironment();
+
+		if (env.getAreaByPosition(dx, dy).getLuminosity() < 0.5) {
+			return false;
+		}
+		if (new Random().nextDouble() > 0.999) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * Agent action phase.
 	 */
@@ -127,8 +164,17 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	protected void onAct() {
 
 		Salle env = getAmas().getEnvironment();
-		
-		
+
+		if (this.drawable.isVisible() || this.drawableMad.isVisible()) {
+			if (!this.isHappy()) {
+				env.setBadArea(dx, dy);
+				this.drawableMad.show();
+				this.drawable.hide();
+			} else {
+				this.drawableMad.hide();
+				this.drawable.show();
+			}
+		}
 
 		if (env.getHour() < this.start) {
 			this.drawable.hide();
@@ -136,6 +182,13 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		} else if (env.getHour() >= this.end) {
 			this.departure = true;
 			this.place = this.startArea;
+		} else if (env.getHour() >= 12 && env.getHour() <= 13) {
+			this.arrived = false;
+			this.move(true);
+			this.move(true);
+			this.move(true);
+			this.move(true);
+			return;
 		}
 
 		this.drawable.show();
@@ -144,12 +197,12 @@ public class Eleve extends Agent<DrAmas, Salle> {
 			this.arrived = true;
 			this.departure = false;
 		}
-		
-		if(env.getHour() >= this.end && !this.departure) {
+
+		if (env.getHour() >= this.end && !this.departure) {
 			this.drawable.hide();
 		}
-		
-		if(this.arrived && !this.departure) {
+
+		if (this.arrived && !this.departure) {
 			return;
 		}
 
@@ -158,10 +211,10 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		 * double distanceXM = Float.MAX_VALUE; double distanceYP = Float.MAX_VALUE;
 		 */
 
-		this.move();
-		this.move();
-		this.move();
-		this.move();
+		this.move(false);
+		this.move(false);
+		this.move(false);
+		this.move(false);
 
 	}
 
@@ -173,6 +226,7 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		 */
 
 		drawable.move(dx * 10, dy * 10);
+		drawableMad.move(dx * 10, dy * 10);
 	}
 
 	@Override

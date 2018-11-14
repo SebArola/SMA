@@ -241,4 +241,9 @@ public class Salle extends Environment {
 			return null;
 		return areas[dy][dx];
 	}
+
+	public void setBadArea(int dx, int dy) {
+		// TODO Auto-generated method stub
+		
+	}
 }
