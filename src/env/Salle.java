@@ -38,6 +38,8 @@ public class Salle extends Environment {
 
 	private int minutes = 30;
 	private int hour = 6;
+	
+	public ArrayList<Area> badAreas;
 
 	private float ambiantLuminosity;
 	
@@ -66,6 +68,8 @@ public class Salle extends Environment {
 			this.windows[i - 1] = new Window(areas[i * 10][0], this);
 		}
 		this.doors = new Door[] { new Door(areas[10][99], this), new Door(areas[90][99], this) };
+		
+		this.badAreas = new ArrayList<Area>();
 
 	}
 	
@@ -243,7 +247,14 @@ public class Salle extends Environment {
 	}
 
 	public void setBadArea(int dx, int dy) {
-		// TODO Auto-generated method stub
-		
+		this.badAreas.add(this.areas[dx][dy]);
+	}
+	
+	public void removeBadArea(int dx, int dy) {
+		this.badAreas.remove(this.areas[dx][dy]);
+	}
+	
+	public ArrayList<Area> getBadArea() {
+		return this.badAreas ;
 	}
 }

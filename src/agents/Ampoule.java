@@ -117,8 +117,6 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	@Override
 	protected void onDecide() {
 		if(!this.amas.isClassEmpty()) {
-			
-
 			double nbZonePasEclaire = 0.0;
 			double nbZone = 0.0;
 			for (Area area : this.source.getLightArea()) {
@@ -130,6 +128,21 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 			if (nbZonePasEclaire/nbZone >0.2) {
 				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
 			}else{
+				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
+			}
+			
+			ArrayList<Area> badAreas = new ArrayList<>();
+			for (Area bad : this.amas.getEnvironment().getBadArea()) {
+				if(this.source.getLightArea().contains(bad)) {
+					badAreas.add(bad);
+				}
+			}
+			if (!badAreas.isEmpty()) {
+				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
+				for (Area a : badAreas) {
+					this.amas.getEnvironment().removeBadArea(a.getX(), a.getY());
+				}
+			}else {
 				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
 			}
 
