@@ -130,21 +130,6 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 			}else{
 				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
 			}
-			
-			ArrayList<Area> badAreas = new ArrayList<>();
-			for (Area bad : this.amas.getEnvironment().getBadArea()) {
-				if(this.source.getLightArea().contains(bad)) {
-					badAreas.add(bad);
-				}
-			}
-			if (!badAreas.isEmpty()) {
-				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()+this.augmentationLum, 1)));
-				for (Area a : badAreas) {
-					this.amas.getEnvironment().removeBadArea(a.getX(), a.getY());
-				}
-			}else {
-				this.source.setLuminosity(Math.max(0, Math.min(this.source.getLuminosity()-this.augmentationLum, 1)));
-			}
 
 		}else {
 			this.source.setLuminosity(0.0);

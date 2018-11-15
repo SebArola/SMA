@@ -49,6 +49,10 @@ public class Area {
 		drawable = VUI.get().createRectangle(x * 10, y * 10, 10, 10);
 		drawable.setLayer(0);
 	}
+	
+	public Map<Source, Double> getSources() {
+		return this.sources;
+	}
 
 	/*
 	 * public void setLuminosity(double lum) { if(lum != 0f) {

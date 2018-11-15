@@ -1,12 +1,15 @@
 package env;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import fr.irit.smac.amak.Environment;
 import fr.irit.smac.amak.Scheduling;
 import ressources.Area;
+import ressources.source.ControllableRoundSource;
 import ressources.source.Door;
+import ressources.source.Source;
 import ressources.source.Window;
 
 /**
@@ -247,14 +250,13 @@ public class Salle extends Environment {
 	}
 
 	public void setBadArea(int dx, int dy) {
-		this.badAreas.add(this.areas[dx][dy]);
-	}
-	
-	public void removeBadArea(int dx, int dy) {
-		this.badAreas.remove(this.areas[dx][dy]);
-	}
-	
-	public ArrayList<Area> getBadArea() {
-		return this.badAreas ;
+		Area a = this.getAreaByPosition(dx, dy);
+		 Map<Source, Double> sources = a.getSources();
+		 for (Source s : sources.keySet()) {
+				if(s.getClass() == ControllableRoundSource.class) {
+					ControllableRoundSource roundSource = (ControllableRoundSource) s;
+					roundSource.setLuminosity(Math.max(0, Math.min(roundSource.getLuminosity()+0.2, 1)));
+				}
+		 }
 	}
 }
