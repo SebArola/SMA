@@ -59,10 +59,8 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onInitialization() {
-
 		dx = (int) params[0];
 		dy = (int) params[1];
-		
 	}
 
 	@Override
