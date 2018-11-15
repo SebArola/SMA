@@ -14,6 +14,7 @@ import fr.irit.smac.amak.Amas;
 import fr.irit.smac.amak.Scheduling;
 import fr.irit.smac.amak.ui.MainWindow;
 import fr.irit.smac.amak.ui.VUI;
+import fr.irit.smac.amak.ui.drawables.Drawable;
 import fr.irit.smac.lxplot.LxPlot;
 import ressources.Area;
 import ressources.source.Door;
@@ -80,12 +81,16 @@ public class DrAmas extends Amas<Salle> {
 
 		// this.ampoules.add(new Ampoule(this, 10, 50));
 		
+		Drawable tableau = VUI.get().createImage(50*10, 5*10, "data/tableau.png");
+		
 		for (int i = 0; i < 3; i += 1) {
 			for (int j = 0; j < NBELEVES/6; j += 1) {
 				Door departure = environment.getDoors()[new Random().nextInt(environment.getDoors().length)];
 
 				this.eleves.add(new Eleve(this, departure.getX(), departure.getY(),
-						environment.getAreaByPosition(10 + 8 * j, 30 + 20 * i)));
+						environment.getAreaByPosition(10 + 8 * j, 50 + 20 * i)));
+				Drawable table = VUI.get().createImage((10 + 8 * j)*10, (50 + 20 * i)*10-20, "data/table.png");
+				
 			}
 			
 		}
@@ -95,7 +100,8 @@ public class DrAmas extends Amas<Salle> {
 				Door departure = environment.getDoors()[new Random().nextInt(environment.getDoors().length)];
 
 				this.eleves.add(new Eleve(this, departure.getX(), departure.getY(),
-						environment.getAreaByPosition(50 + 8 * j, 30 + 20 * i)));
+						environment.getAreaByPosition(50 + 8 * j, 50 + 20 * i)));
+				Drawable table = VUI.get().createImage((50 + 8 * j)*10, (50 + 20 * i)*10-20, "data/table.png");
 			}
 			
 		}

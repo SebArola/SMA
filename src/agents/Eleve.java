@@ -148,10 +148,23 @@ public class Eleve extends Agent<DrAmas, Salle> {
 	private boolean isHappy() {
 		Salle env = getAmas().getEnvironment();
 
+		int x = 50 + new Random().nextInt() % 10;
+		int y = 5 + new Random().nextInt() % 5;
+		
+		System.out.println(x+","+y);
+
+		if (env.getAreaByPosition(x, y).getLuminosity() < 0.5) {
+			env.setBadArea(x, y);
+			
+			return false;
+		}
+
 		if (env.getAreaByPosition(dx, dy).getLuminosity() < 0.5) {
+			env.setBadArea(dx, dy);
 			return false;
 		}
 		if (new Random().nextDouble() > 0.999) {
+			env.setBadArea(dx, dy);
 			return false;
 		}
 		return true;
@@ -167,7 +180,6 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 		if (this.drawable.isVisible() || this.drawableMad.isVisible()) {
 			if (!this.isHappy()) {
-				env.setBadArea(dx, dy);
 				this.drawableMad.show();
 				this.drawable.hide();
 			} else {
