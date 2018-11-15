@@ -7,6 +7,7 @@ import controller.DrAmas;
 import env.Salle;
 import fr.irit.smac.amak.Agent;
 import fr.irit.smac.amak.ui.VUI;
+import fr.irit.smac.amak.ui.drawables.Drawable;
 import fr.irit.smac.amak.ui.drawables.DrawableRectangle;
 import ressources.Area;
 import ressources.source.ControllableRoundSource;
@@ -31,7 +32,7 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 	 */
 	private int rayonDeclairage;
 
-	private DrawableRectangle drawable;
+	private Drawable drawable;
 	private ControllableRoundSource source;
 	private double augmentationLum;
 	private double lumMoy;
@@ -66,9 +67,11 @@ public class Ampoule extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onRenderingInitialization() {
-		drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
-		drawable.setLayer(1);
-		drawable.setColor(Color.WHITE);
+		/*drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
+		drawable.setLayer(2);
+		drawable.setColor(Color.WHITE);*/
+		drawable = VUI.get().createImage(dx * 10, dy * 10, "data/light.png");
+		drawable.setLayer(2);
 	}
 
 	/**
