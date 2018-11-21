@@ -50,12 +50,10 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onRenderingInitialization() {
-		// drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
 		drawable = VUI.get().createImage(dx * 10, dy * 10, "data/eleve.png");
 		drawableMad = VUI.get().createImage(dx * 10, dy * 10, "data/eleve_mad.png");
 		drawableMad.setLayer(1);
 		drawable.setLayer(1);
-		// drawable.setColor(Color.RED);
 		drawable.hide();
 		drawableMad.hide();
 	}
@@ -152,8 +150,6 @@ public class Eleve extends Agent<DrAmas, Salle> {
 		int y = 5 + new Random().nextInt() % 6;
 		boolean ret = true;
 		
-		//System.out.println(x+","+y);
-
 		if (env.getAreaByPosition(x, y).getLuminosity() < 0.5) {
 			env.setBadArea(x, y);
 			ret = false;
@@ -219,11 +215,6 @@ public class Eleve extends Agent<DrAmas, Salle> {
 			return;
 		}
 
-		/*
-		 * double distanceXP = Float.MAX_VALUE; double distanceYM = Float.MAX_VALUE;
-		 * double distanceXM = Float.MAX_VALUE; double distanceYP = Float.MAX_VALUE;
-		 */
-
 		this.move(false);
 		this.move(false);
 		this.move(false);
@@ -233,11 +224,6 @@ public class Eleve extends Agent<DrAmas, Salle> {
 
 	@Override
 	protected void onUpdateRender() {
-		/*
-		 * drawable = VUI.get().createRectangle(dx * 10, dy * 10, 10, 10);
-		 * drawable.setLayer(1); drawable.setColor(Color.RED);
-		 */
-
 		drawable.move(dx * 10, dy * 10);
 		drawableMad.move(dx * 10, dy * 10);
 	}

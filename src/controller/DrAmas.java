@@ -29,7 +29,6 @@ public class DrAmas extends Amas<Salle> {
 	private ArrayList<Eleve> eleves;
 
 	public final static int NBAMPOULE = 16;
-	//public final static int NBAMPOULE = 1;
 	public final static int NBELEVES = 30;
 	private int totalSum = 0;
 
@@ -74,12 +73,9 @@ public class DrAmas extends Amas<Salle> {
 				x = 12;
 				y += 25;
 			}
-			//System.out.println("new ampoule " + x + "," + y);
 			this.ampoules.add(new Ampoule(this, x, y));
 			x += 25;
 		}
-
-		// this.ampoules.add(new Ampoule(this, 10, 50));
 		
 		Drawable tableau = VUI.get().createImage(50*10, 5*10, "data/tableau.png");
 		
@@ -106,15 +102,6 @@ public class DrAmas extends Amas<Salle> {
 			
 		}
 		
-		
-		/*for (int i = 0; i < NBELEVES; i += 1) {
-
-			Door departure = environment.getDoors()[new Random().nextInt(environment.getDoors().length)];
-			int j = i%10;
-
-			this.eleves.add(new Eleve(this, departure.getX(), departure.getY(),
-					environment.getAreaByPosition(10 + 8 * j, 30 + 7 * j)));
-		}*/
 
 	}
 
@@ -129,17 +116,6 @@ public class DrAmas extends Amas<Salle> {
 		DrAmas drAmas = new DrAmas(new Salle());
 
 		new SalleViewer(drAmas);
-		/*
-		 * MainWindow.addMenuItem("Remove 10 drones", l -> { for (int i = 0; i < 10;
-		 * i++) {
-		 * drAmas.getAgents().get(drAmas.getEnvironment().getRandom().nextInt(drAmas.
-		 * getAgents().size())) .destroy(); } });
-		 * /*MainWindow.addMenuItem("Add 10 drones", l -> { for (int i = 0; i < 10; i++)
-		 * {
-		 * 
-		 * new Drone(drAmas, drAmas.getEnvironment().getRandom().nextInt(World.WIDTH),
-		 * drAmas.getEnvironment().getRandom().nextInt(World.HEIGHT)); } });
-		 */
 
 	}
 
@@ -169,10 +145,7 @@ public class DrAmas extends Amas<Salle> {
 
 		this.totalSum += sum;
 
-		LxPlot.getChart("Luminosite").add("Lum moyenne", getCycle() % 1000, sum / nbCase);
-
-		// LxPlot.getChart("Consommation").add("Totale", getCycle() % 1000, totalSum);
-		
+		LxPlot.getChart("Luminosite").add("Lum moyenne", getCycle() % 1000, sum / nbCase);		
 
 		sum = 0;
 		for (Ampoule a : this.ampoules) {
@@ -183,8 +156,6 @@ public class DrAmas extends Amas<Salle> {
 		if (lastSums.size() > 10000)
 			lastSums.poll();
 
-//		LxPlot.getChart("Luminosite").add("Lum total", getCycle() % 1000, sum);
-//		LxPlot.getChart("Luminosite").add("Lum total moyenne", getCycle() % 1000, average(lastSums));
 		LxPlot.getChart("Consommation").add("Instantannée", getCycle() % 1000, sum);
 		LxPlot.getChart("Luminosite").add("Lum ambiante", getCycle() % 1000, env.getAmbiantLuminosity());
 		LxPlot.getChart("Luminosite").add("Lum ampoules moyenne", getCycle() % 1000, sum / this.ampoules.size());
@@ -205,20 +176,4 @@ public class DrAmas extends Amas<Salle> {
 		return average.getAsDouble();
 	}
 
-	/**
-	 * Get agents presents in a specified area
-	 * 
-	 * @param areaByPosition The specified area
-	 * @return the list of drones in this area
-	 */
-	public Agent[] getAgentsInArea(Area areaByPosition) {
-		List<Agent> res = new ArrayList<>();
-		for (Agent<?, Salle> agent : agents) {
-			/*
-			 * if (((Agent) agent).getCurrentArea() == areaByPosition) res.add((Agent)
-			 * agent);
-			 */
-		}
-		return res.toArray(new Agent[0]);
-	}
 }

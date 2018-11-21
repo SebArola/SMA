@@ -31,7 +31,6 @@ public class Area {
 	private DrawableRectangle drawable;
 	private double luminosity = 0;
 	private Map<Source, Double> sources;
-	// private double luminosity = new Random().nextDouble();
 
 	/**
 	 * Constructor of the area
@@ -54,20 +53,9 @@ public class Area {
 		return this.sources;
 	}
 
-	/*
-	 * public void setLuminosity(double lum) { if(lum != 0f) {
-	 * 
-	 * this.luminosity = 1f; }else {
-	 * 
-	 * this.luminosity = 0f; } this.luminosity = lum; }
-	 */
-
 	public void addLuminosity(Source source, double lum) {
 
 		this.sources.put(source, lum);
-
-		// this.luminosity = Math.min(lum + luminosity, 1f);
-
 	}
 
 	private void resetLuminosity() {
@@ -91,15 +79,6 @@ public class Area {
 	public int getY() {
 		return y;
 	}
-
-	/**
-	 * This method is called when the drone scans the area
-	 * 
-	 * @param drone The drone which scans the area
-	 */
-	/*
-	 * public void seen(Agent agent) { nextTimeSinceLastSeen = 0; }
-	 */
 
 	/**
 	 * Getter for the amount of time since last scan
@@ -142,21 +121,4 @@ public class Area {
 	public String toString() {
 		return this.getX() + "," + this.getY();
 	}
-
-	/**
-	 * Manually set a hgh criticality to request a scan on a specific area
-	 */
-	/*
-	 * public void setCritical() { nextTimeSinceLastSeen = 1000; }
-	 */
-
-	/**
-	 * Compute the criticality of the area based on the time since last scan
-	 * 
-	 * @return the criticality of the area
-	 */
-	/*
-	 * public double computeCriticality() { return Math.min(timeSinceLastSeen *
-	 * outdateFactor / 1000, 1); }
-	 */
 }
